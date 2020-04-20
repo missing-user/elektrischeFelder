@@ -24,8 +24,8 @@ onmessage = function (evt) {
 			charges = evt.data.charges
 			multiplyer = evt.data.multiplyer
 			limitSubstep = evt.data.limitSubstep
+			loop()
 		}
-	requestAnimationFrame(loop)
 }
 
 function loop() {
