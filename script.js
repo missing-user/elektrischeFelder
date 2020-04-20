@@ -22,6 +22,8 @@ canvas.addEventListener('mousedown', function (event) {
 			colour: 'rgb(255,255,255)',
 			x: x / scale,
 			y: y / scale,
+			vx: 0,
+			vy: 0,
 			q: document.getElementById('positiveCharge').checked ? 1 : -1,
 			dynamic: document.getElementById('dynamicc').checked,
 			trail: []
@@ -31,6 +33,8 @@ canvas.addEventListener('mousedown', function (event) {
 			colour: 'rgb(255,255,255)',
 			x: x / scale,
 			y: y / scale,
+			vx: 0,
+			vy: 0,
 			q: !document.getElementById('positiveCharge').checked ? 1 : -1,
 			dynamic: document.getElementById('dynamicc').checked,
 			trail: []
@@ -77,11 +81,20 @@ function updateView() {
 	})
 }
 
-function renderHighRes() {
-	renderer.postMessage({
-		res: 1,
-		update: ['res']
-	})
+function renderHighRes(btn) {
+	if (btn.textContent == 'low res mode') {
+		renderer.postMessage({
+			res: 10,
+			update: ['res']
+		})
+		btn.textContent = 'high res mode'
+	} else {
+		renderer.postMessage({
+			res: 1,
+			update: ['res']
+		})
+		btn.textContent = 'low res mode'
+	}
 }
 
 function pause() {
