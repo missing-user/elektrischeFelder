@@ -4,7 +4,7 @@ var scale
 var res
 var dynamics
 var charges
-var multiplyer
+var constant
 var lastTime = 0
 onmessage = function (evt) {
 	if ('update' in evt.data)
@@ -17,7 +17,7 @@ onmessage = function (evt) {
 			res = evt.data.res
 			dynamics = evt.data.dynamics
 			charges = evt.data.charges
-			multiplyer = evt.data.multiplyer
+			constant = evt.data.constant
 			loop()
 		}
 }
@@ -57,7 +57,7 @@ function getFieldStrength(x, y) {
 		dx = x - e.x
 		dy = y - e.y
 		r2 = dx * dx + dy * dy
-		strength += multiplyer * e.q / r2
+		strength += constant * e.q / r2
 	}
 	return strength
 }

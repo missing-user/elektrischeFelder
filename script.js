@@ -1,12 +1,12 @@
-var canvas = document.getElementById('canvas')
-elemLeft = canvas.offsetLeft,
+var canvas = document.getElementById('canvas'),
+	elemLeft = canvas.offsetLeft,
 	elemTop = canvas.offsetTop,
 	charges = [],
 	dynamics = [],
 	res = 10,
 	lastTime = 0
 var offscreen = canvas.transferControlToOffscreen()
-const multiplyer = Math.PI * 4,
+const constant = Math.PI * 4,
 	scale = 100,
 	limitSubstep = 1000
 var paused = false
@@ -56,13 +56,13 @@ renderer.postMessage({
 	charges: charges,
 	scale: scale,
 	res: res,
-	multiplyer: multiplyer,
+	constant: constant,
 	canvas: offscreen
 }, [offscreen])
 physicsWorker.postMessage({
 	dynamics: dynamics,
 	charges: charges,
-	multiplyer: multiplyer,
+	constant: constant,
 	limitSubstep: limitSubstep
 })
 

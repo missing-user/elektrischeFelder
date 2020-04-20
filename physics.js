@@ -1,19 +1,19 @@
 var dynamics
 var charges
-var multiplyer
+var constant
 var limitSubstep
 var lastTime = 0
 var paused = false
 onmessage = function (evt) {
 	if ('update' in evt.data) {
 		for (var key of evt.data.update) {
-			console.log('updating key', key)
+			console.log('updating key', key, 'to', evt.data[key])
 			this[key] = evt.data[key]
 		}
 	} else {
 		dynamics = evt.data.dynamics
 		charges = evt.data.charges
-		multiplyer = evt.data.multiplyer
+		constant = evt.data.constant
 		limitSubstep = evt.data.limitSubstep
 		loop()
 	}
@@ -58,7 +58,7 @@ function getFieldVector(x, y) {
 		dy = y - e.y
 		r2 = dx * dx + dy * dy
 		if (r2 < 0.0005) r2 = 0.0005
-		strength = multiplyer * e.q / r2
+		strength = constant * e.q / r2
 		if (r2 > 0) {
 			dist = Math.sqrt(r2)
 			vec.x += strength * dx / dist
