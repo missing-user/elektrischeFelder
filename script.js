@@ -1,5 +1,4 @@
-var canvas = document.getElementById('canvas'),
-	ctx = canvas.getContext('bitmaprenderer')
+var canvas = document.getElementById('canvas')
 elemLeft = canvas.offsetLeft,
 	elemTop = canvas.offsetTop,
 	charges = [],
