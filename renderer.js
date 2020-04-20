@@ -1,20 +1,16 @@
 var canvas
 var ctx
-var scalw
+var scale
 var res
 var dynamics
 var charges
 var multiplyer
-var limitSubstep
 var lastTime = 0
 onmessage = function (evt) {
 	if ('update' in evt.data)
 		for (var key of evt.data.update) {
 			console.log('updating key', key)
 			this[key] = evt.data[key]
-			dynamics = charges.filter((ch) => {
-				return ch.dynamic
-			})
 		} else {
 			canvas = evt.data.canvas;
 			ctx = canvas.getContext("2d");
@@ -23,33 +19,19 @@ onmessage = function (evt) {
 			dynamics = evt.data.dynamics
 			charges = evt.data.charges
 			multiplyer = evt.data.multiplyer
-			limitSubstep = evt.data.limitSubstep
 			loop()
 		}
 }
 
 function loop() {
-	delta = (performance.now() - lastTime) / 1000
-	lastTime = performance.now()
-	if (delta > 0.1) delta = 0.1
-	dt = delta / limitSubstep
-	for (var i = 0; i < limitSubstep; i++)
-		for (charge of dynamics) {
-			fv = getFieldVector(charge.x, charge.y)
-			charge.vx += fv.x * charge.q * dt
-			charge.vy += fv.y * charge.q * dt
-			charge.x += charge.vx * dt
-			charge.y += charge.vy * dt
-		}
-	for (charge of dynamics) charge.trail.push({
-		x: charge.x,
-		y: charge.y
-	})
 	draw()
 	requestAnimationFrame(loop)
 }
 
 function draw() {
+	delta = (performance.now() - lastTime) / 1000
+	lastTime = performance.now()
+	console.log('physics fps', 1 / delta);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < canvas.width; i += res) {
 		for (var j = 0; j < canvas.height; j += res) {
@@ -71,39 +53,20 @@ function draw() {
 	ctx.stroke()
 }
 
-function getFieldVector(x, y) {
-	vec = {
-		x: 0,
-		y: 0
-	}
-	for (var e of charges) {
-		dx = x - e.x
-		dy = y - e.y
-		r2 = dx * dx + dy * dy
-		if (r2 < 0.0005) r2 = 0.0005
-		strength = multiplyer * e.q / r2
-		if (r2 > 0) {
-			dist = Math.sqrt(r2)
-			vec.x += strength * dx / dist
-			vec.y += strength * dy / dist
-		}
-	}
-	return vec
-}
-
 function getFieldStrength(x, y) {
 	strength = 0
 	for (var e of charges) {
 		dx = x - e.x
 		dy = y - e.y
 		r2 = dx * dx + dy * dy
-		if (r2 < 0.0005) r2 = 0.0005
 		strength += multiplyer * e.q / r2
 	}
 	return strength
 }
 
 function getColor(dist, max = 5) {
+	//calculated limit at which it switches to background color (exp(1/255))
+	if (Math.abs(dist) < 1.0039076149) return 'rgb(0,255,0)'
 	if (dist < 0) {
 		dist = -dist
 		dist = Math.log(dist)

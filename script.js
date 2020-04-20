@@ -10,7 +10,8 @@ const multiplyer = Math.PI * 4,
 	scale = 100,
 	limitSubstep = 100
 var paused = false
-var worker = new Worker("worker.js")
+var renderer = new Worker("renderer.js")
+var physicsWorker = new Worker("physics.js")
 // Add event listener for `click` events.
 canvas.addEventListener('mousedown', function (event) {
 	var x = event.pageX - elemLeft,
@@ -41,30 +42,44 @@ canvas.addEventListener("contextmenu", function (event) {
 	console.log('context menu prevented');
 	event.preventDefault();
 })
-worker.addEventListener('message', function (ev) {
-	if (ev.data.msg === 'render') {
-		ctx.transferFromImageBitmap(ev.data.bitmap);
-	}
+physicsWorker.addEventListener('message', function (event) {
+	charges = event.data.charges
+	dynamics = event.data.dynamics
+	renderer.postMessage({
+		charges: charges,
+		dynamics: dynamics,
+		update: ['charges', 'dynamics']
+	})
 })
-worker.postMessage({
+renderer.postMessage({
 	dynamics: dynamics,
 	charges: charges,
 	scale: scale,
 	res: res,
 	multiplyer: multiplyer,
+	canvas: offscreen
+}, [offscreen])
+physicsWorker.postMessage({
+	dynamics: dynamics,
+	charges: charges,
+	multiplyer: multiplyer,
 	canvas: offscreen,
 	limitSubstep: limitSubstep
-}, [offscreen])
+})
 
 function updateView() {
-	worker.postMessage({
+	dynamics = charges.filter((ch) => {
+		return ch.dynamic
+	})
+	physicsWorker.postMessage({
 		charges: charges,
-		update: ['charges']
+		dynamics: dynamics,
+		update: ['charges', 'dynamics']
 	})
 }
 
 function renderHighRes() {
-	worker.postMessage({
+	renderer.postMessage({
 		res: 1,
 		update: ['res']
 	})
