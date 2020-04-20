@@ -3,6 +3,7 @@ var charges
 var multiplyer
 var limitSubstep
 var lastTime = 0
+var paused = false
 onmessage = function (evt) {
 	if ('update' in evt.data) {
 		for (var key of evt.data.update) {
@@ -23,6 +24,7 @@ function loop() {
 	lastTime = performance.now()
 	console.log('physics fps', 1 / delta)
 	if (delta > 0.1) delta = 0.1
+	if (paused) delta = 0
 	dt = delta / limitSubstep
 	for (var i = 0; i < limitSubstep; i++)
 		for (charge of dynamics) {

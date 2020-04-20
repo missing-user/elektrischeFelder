@@ -17,7 +17,23 @@ canvas.addEventListener('mousedown', function (event) {
 	var x = event.pageX - elemLeft,
 		y = event.pageY - elemTop;
 	console.log(event)
-	addCharge(event.button == 0)
+	if (event.button == 0) {
+		charges.push({
+			colour: 'rgb(255,255,255)',
+			x: x / scale,
+			y: y / scale,
+			q: document.getElementById('positiveCharge').checked ? 1 : -1,
+			dynamic: document.getElementById('dynamicc').checked
+		})
+	} else {
+		charges.push({
+			colour: 'rgb(255,255,255)',
+			x: x / scale,
+			y: y / scale,
+			q: -1,
+			dynamic: document.getElementById('dynamicc').checked
+		})
+	}
 	updateView()
 }, false);
 canvas.addEventListener("contextmenu", function (event) {
@@ -48,16 +64,6 @@ physicsWorker.postMessage({
 	limitSubstep: limitSubstep
 })
 
-function addCharge(positive) {
-	charges.push({
-		colour: 'rgb(255,255,255)',
-		x: x / scale,
-		y: y / scale,
-		q: positive == 0 ? 1 : -1,
-		dynamic: document.getElementById('dynamicc').checked
-	})
-}
-
 function updateView() {
 	dynamics = charges.filter((ch) => {
 		return ch.dynamic
@@ -78,4 +84,8 @@ function renderHighRes() {
 
 function pause() {
 	paused = !paused
+	physicsWorker.postMessage({
+		paused: paused,
+		update: ['paused']
+	})
 }
