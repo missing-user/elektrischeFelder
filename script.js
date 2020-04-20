@@ -8,12 +8,18 @@ const multiplyer = Math.PI * 4
 canvas.addEventListener('mousedown', function (event) {
 	var x = event.pageX - elemLeft,
 		y = event.pageY - elemTop;
-	console.log(x, y);
-	elements.push({
+	console.log(event);
+	if (event.button == 0) elements.push({
 		colour: '#055AFF',
 		y: y,
 		x: x,
 		q: 500
+	});
+	else elements.push({
+		colour: '#055AFF',
+		y: y,
+		x: x,
+		q: -500
 	});
 	updateView()
 }, false);
@@ -40,8 +46,16 @@ function updateView() {
 }
 
 function getColor(dist, max = 5) {
-	dist = Math.log(dist)
-	if (dist > max) dist = max
-	ratio = dist / max * 255
-	return ['rgb(', ratio, ',', 255 - ratio, ',0)'].join('')
+	if (dist < 0) {
+		dist = -dist
+		dist = Math.log(dist)
+		if (dist > max) dist = max
+		ratio = dist / max * 255
+		return ['rgb(0,', 255 - ratio, ',', ratio, ')'].join('')
+	} else {
+		dist = Math.log(dist)
+		if (dist > max) dist = max
+		ratio = dist / max * 255
+		return ['rgb(', ratio, ',', 255 - ratio, ',0)'].join('')
+	}
 }
