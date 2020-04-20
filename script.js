@@ -60,21 +60,16 @@ function updateView() {
 	worker.postMessage({
 		charges: charges,
 		update: ['charges']
-	}, [offscreen])
+	})
 }
 
 function renderHighRes() {
 	worker.postMessage({
 		res: 1,
 		update: ['res']
-	}, [offscreen])
+	})
 }
 
 function pause() {
-	if (paused) {
-		paused = false
-		loop()
-	} else {
-		paused = true
-	}
+	paused = !paused
 }

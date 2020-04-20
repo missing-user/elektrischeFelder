@@ -32,7 +32,6 @@ function loop() {
 	delta = (performance.now() - lastTime) / 1000
 	lastTime = performance.now()
 	if (delta > 0.1) delta = 0.1
-	console.log(delta)
 	dt = delta / limitSubstep
 	for (var i = 0; i < limitSubstep; i++)
 		for (charge of dynamics) {
@@ -46,7 +45,8 @@ function loop() {
 		x: charge.x,
 		y: charge.y
 	})
-	if (!paused) requestAnimationFrame(loop)
+	draw()
+	requestAnimationFrame(loop)
 }
 
 function draw() {
