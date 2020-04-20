@@ -23,15 +23,17 @@ canvas.addEventListener('mousedown', function (event) {
 			x: x / scale,
 			y: y / scale,
 			q: document.getElementById('positiveCharge').checked ? 1 : -1,
-			dynamic: document.getElementById('dynamicc').checked
+			dynamic: document.getElementById('dynamicc').checked,
+			trails: []
 		})
 	} else {
 		charges.push({
 			colour: 'rgb(255,255,255)',
 			x: x / scale,
 			y: y / scale,
-			q: -1,
-			dynamic: document.getElementById('dynamicc').checked
+			q: !document.getElementById('positiveCharge').checked ? 1 : -1,
+			dynamic: document.getElementById('dynamicc').checked,
+			trails: []
 		})
 	}
 	updateView()
