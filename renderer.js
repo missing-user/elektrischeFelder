@@ -62,19 +62,26 @@ function getFieldStrength(x, y) {
 	return strength
 }
 
+function percentageToColor(percentage, maxHue = 0, minHue = 120) {
+	const hue = percentage * (maxHue - minHue) + minHue;
+	return `hsl(${hue}, 100%, 50%)`;
+}
+
 function getColor(dist, max = 5) {
 	//calculated limit at which it switches to background color (exp(1/255))
-	if (Math.abs(dist) < 1.0039076149) return 'rgb(0,255,0)'
+	if (Math.abs(dist) < 1.0039076149) return 'hsl(120, 100%, 50%)'
 	if (dist < 0) {
 		dist = -dist
 		dist = Math.log(dist)
 		if (dist > max) dist = max
-		ratio = dist / max * 255
+		ratio = dist / max
+		return percentageToColor(ratio)
 		return ['rgb(0,', 255 - ratio, ',', ratio, ')'].join('')
 	} else {
 		dist = Math.log(dist)
 		if (dist > max) dist = max
-		ratio = dist / max * 255
+		ratio = dist / max
+		return percentageToColor(ratio, 255, 120)
 		return ['rgb(', ratio, ',', 255 - ratio, ',0)'].join('')
 	}
 }
