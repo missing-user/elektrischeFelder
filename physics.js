@@ -21,7 +21,7 @@ onmessage = function (evt) {
 function loop() {
 	delta = (performance.now() - lastTime) / 1000
 	lastTime = performance.now()
-	console.log('physics fps', 1 / delta);
+	console.log('physics fps', 1 / delta)
 	if (delta > 0.1) delta = 0.1
 	dt = delta / limitSubstep
 	for (var i = 0; i < limitSubstep; i++)
@@ -32,10 +32,13 @@ function loop() {
 			charge.x += charge.vx * dt
 			charge.y += charge.vy * dt
 		}
-	for (charge of dynamics) charge.trail.push({
-		x: charge.x,
-		y: charge.y
-	})
+	for (charge of dynamics) {
+		charge.trail.push({
+			x: charge.x,
+			y: charge.y
+		})
+		if (charge.trail.length > 100) charge.trail = charge.trail.slice(1)
+	}
 	postMessage({
 		charges: charges,
 		dynamics: dynamics,

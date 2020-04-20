@@ -8,7 +8,7 @@ elemLeft = canvas.offsetLeft,
 var offscreen = canvas.transferControlToOffscreen()
 const multiplyer = Math.PI * 4,
 	scale = 100,
-	limitSubstep = 100
+	limitSubstep = 1000
 var paused = false
 var renderer = new Worker("renderer.js")
 var physicsWorker = new Worker("physics.js")
@@ -16,26 +16,8 @@ var physicsWorker = new Worker("physics.js")
 canvas.addEventListener('mousedown', function (event) {
 	var x = event.pageX - elemLeft,
 		y = event.pageY - elemTop;
-	console.log(event);
-	if (event.button == 0) charges.push({
-		colour: 'rgb(255,255,255)',
-		x: x / scale,
-		y: y / scale,
-		q: event.button == 0 ? 1 : -1,
-		dynamic: false
-	});
-	else {
-		charges.push({
-			colour: 'rgb(255,255,255)',
-			x: x / scale,
-			y: y / scale,
-			vx: 0,
-			vy: 0,
-			q: -1,
-			dynamic: true,
-			trail: []
-		});
-	}
+	console.log(event)
+	addCharge(event.button == 0)
 	updateView()
 }, false);
 canvas.addEventListener("contextmenu", function (event) {
@@ -65,6 +47,16 @@ physicsWorker.postMessage({
 	multiplyer: multiplyer,
 	limitSubstep: limitSubstep
 })
+
+function addCharge(positive) {
+	charges.push({
+		colour: 'rgb(255,255,255)',
+		x: x / scale,
+		y: y / scale,
+		q: positive == 0 ? 1 : -1,
+		dynamic: document.getElementById('dynamicc').checked
+	})
+}
 
 function updateView() {
 	dynamics = charges.filter((ch) => {
