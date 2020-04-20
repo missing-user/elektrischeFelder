@@ -31,7 +31,7 @@ function loop() {
 function draw() {
 	delta = (performance.now() - lastTime) / 1000
 	lastTime = performance.now()
-	console.log('physics fps', 1 / delta);
+	console.log('render fps', 1 / delta);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < canvas.width; i += res) {
 		for (var j = 0; j < canvas.height; j += res) {

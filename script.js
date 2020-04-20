@@ -63,7 +63,6 @@ physicsWorker.postMessage({
 	dynamics: dynamics,
 	charges: charges,
 	multiplyer: multiplyer,
-	canvas: offscreen,
 	limitSubstep: limitSubstep
 })
 

@@ -4,17 +4,18 @@ var multiplyer
 var limitSubstep
 var lastTime = 0
 onmessage = function (evt) {
-	if ('update' in evt.data)
+	if ('update' in evt.data) {
 		for (var key of evt.data.update) {
 			console.log('updating key', key)
 			this[key] = evt.data[key]
-		} else {
-			dynamics = evt.data.dynamics
-			charges = evt.data.charges
-			multiplyer = evt.data.multiplyer
-			limitSubstep = evt.data.limitSubstep
-			loop()
 		}
+	} else {
+		dynamics = evt.data.dynamics
+		charges = evt.data.charges
+		multiplyer = evt.data.multiplyer
+		limitSubstep = evt.data.limitSubstep
+		loop()
+	}
 }
 
 function loop() {
@@ -34,6 +35,10 @@ function loop() {
 	for (charge of dynamics) charge.trail.push({
 		x: charge.x,
 		y: charge.y
+	})
+	postMessage({
+		charges: charges,
+		dynamics: dynamics,
 	})
 	requestAnimationFrame(loop)
 }
