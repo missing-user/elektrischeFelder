@@ -19,6 +19,25 @@
     <br>
     <label for="positiveCharge">positive charge</label>
     <input type="checkbox" name="" value="" id="positiveCharge" checked="checked">
+    <script type="text/javascript">
+      if (!window.OffscreenCanvas) {
+        window.OffscreenCanvas = class OffscreenCanvas {
+          constructor(width, height) {
+            this.canvas = document.createElement("canvas");
+            this.canvas.width = width;
+            this.canvas.height = height;
+
+            this.canvas.convertToBlob = () => {
+              return new Promise(resolve => {
+                this.canvas.toBlob(resolve);
+              })
+            }
+            return this.canvas;
+          }
+        }
+        console.log('polyfil for offscreen canvas succcessful');
+      }
+    </script>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="script.js"></script>
   </body>

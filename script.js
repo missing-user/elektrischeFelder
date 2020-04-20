@@ -24,7 +24,7 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			q: document.getElementById('positiveCharge').checked ? 1 : -1,
 			dynamic: document.getElementById('dynamicc').checked,
-			trails: []
+			trail: []
 		})
 	} else {
 		charges.push({
@@ -33,7 +33,7 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			q: !document.getElementById('positiveCharge').checked ? 1 : -1,
 			dynamic: document.getElementById('dynamicc').checked,
-			trails: []
+			trail: []
 		})
 	}
 	updateView()
