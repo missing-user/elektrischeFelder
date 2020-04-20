@@ -22,7 +22,6 @@ onmessage = function (evt) {
 function loop() {
 	delta = (performance.now() - lastTime) / 1000
 	lastTime = performance.now()
-	console.log('physics fps', 1 / delta)
 	if (delta > 0.1) delta = 0.1
 	if (paused) delta = 0
 	dt = delta / limitSubstep
