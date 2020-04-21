@@ -22,28 +22,21 @@
     <label for="positiveCharge">positive charge</label>
     <input type="checkbox" id="positiveCharge" checked="checked">
     <br>
+    <label for="pixelsPerCell">charge intensity</label>
+    <input type="range" name="" value="10" min="2" onchange="renderHighRes(this.value)" max="50" id="pixelsPerCell">
+    <br>
     <label for="hsvcolor">HSV color pallete</label>
     <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor">
     <script type="text/javascript">
-      if (!window.OffscreenCanvas) {
-        window.OffscreenCanvas = class OffscreenCanvas {
-          constructor(width, height) {
-            this.canvas = document.createElement("canvas");
-            this.canvas.width = width;
-            this.canvas.height = height;
-
-            this.canvas.convertToBlob = () => {
-              return new Promise(resolve => {
-                this.canvas.toBlob(resolve);
-              })
-            }
-            return this.canvas;
-          }
-        }
-        console.log('polyfil for offscreen canvas succcessful');
-      }
+      var scr = document.createElement('script');
+      scr.type = 'text/javascript';
+      if (window.OffscreenCanvas) 
+        scr.src = "script.js"
+      else 
+        scr.src = "noWorker_fallback.js"
+      document.body.appendChild(scr);
     </script>
-    <script type="text/javascript" src="script.js"></script>
+    <!--<script type="text/javascript" src="script.js"></script>-->
     <!--<script type="text/javascript" src="noWorker_fallback.js"></script>-->
   </body>
 </html>
