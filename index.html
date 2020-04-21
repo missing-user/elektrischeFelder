@@ -14,10 +14,12 @@
     <button type="button" name="button" onclick="pause()">pause</button>
     <br>
     <label for="pixelsPerCell">pixels per cell</label>
-    <input type="range" name="" value="10" min="2" onchange="renderHighRes(this.value)" max="50" id="pixelsPerCell">
+    <input type="range" name="" value="10" min="2" onchange="renderHighRes(this.value)" oninput="document.getElementById('pixelsPerCello').value = this.value" max="50" id="pixelsPerCell">
+    <output id="pixelsPerCello">10</output>
     <br>
     <label for="chargeIntensity">charge value</label>
-    <input type="range" value="10" min="1" max="100" onchange="chargev = this.value/10" id="chargeIntensity">
+    <input type="range" value="50" min="1" max="100" oninput="chargev = Math.exp(this.value/11)/100; document.getElementById('chargeIntensityo').value = chargev" id="chargeIntensity">
+    <output id="chargeIntensityo">1</output>
     <br>
     <label for="dynamicc">movable charge</label>
     <input type="checkbox" id="dynamicc">
@@ -26,7 +28,10 @@
     <input type="checkbox" id="positiveCharge" checked="checked">
     <br>
     <label for="hsvcolor">HSV color pallete</label>
-    <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor">
+    <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor" checked="checked">
+    <br>
+    <label for="walls">walls</label>
+    <input type="checkbox" onchange="wall(this.checked)" id="walls" checked="checked">
     <script type="text/javascript">
       var scr = document.createElement('script');
       scr.type = 'text/javascript';

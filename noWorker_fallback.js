@@ -5,13 +5,14 @@ var canvas = document.getElementById('canvas'),
 	dynamics = [],
 	res = 20,
 	lastTime = 0,
-	hsvcolor = false,
-	chargev = 1
+	hsvcolor = true,
+	chargev = 1,
+	walls = true
 var ctx = canvas.getContext('2d')
 var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
 const constant = Math.PI * 4,
 	scale = 100,
-	limitSubstep = 1000
+	limitSubstep = 500
 var paused = false
 // Add event listener for `click` events.
 canvas.addEventListener('mousedown', function (event) {
@@ -98,6 +99,24 @@ function loop() {
 			charge.y += charge.vy * dt
 		}
 	for (charge of dynamics) {
+		if (walls) {
+			if (charge.x < 0) {
+				charge.x = 0
+				charge.vx = -charge.vx
+			}
+			if (charge.y < 0) {
+				charge.y = 0
+				charge.vy = -charge.vy
+			}
+			if (charge.x > canvas.width / scale) {
+				charge.x = canvas.width / scale
+				charge.vx = -charge.vx
+			}
+			if (charge.y > canvas.height / scale) {
+				charge.y = canvas.height / scale
+				charge.vy = -charge.vy
+			}
+		}
 		charge.trail.push({
 			x: charge.x,
 			y: charge.y
@@ -145,6 +164,11 @@ function draw() {
 		}
 	}
 	ctx.stroke()
+}
+
+function wall(value) {
+	walls = value
+	console.log(walls);
 }
 
 function getFieldStrength(x, y) {

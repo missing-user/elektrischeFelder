@@ -7,7 +7,7 @@ var charges
 var constant
 var lastTime = 0
 var imageData
-var hsvcolor = false
+var hsvcolor = true
 onmessage = function (evt) {
 	if ('update' in evt.data)
 		for (var key of evt.data.update) {

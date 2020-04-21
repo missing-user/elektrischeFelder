@@ -4,6 +4,9 @@ var constant
 var limitSubstep
 var lastTime = 0
 var paused = false
+var walls = true
+var width
+var height
 onmessage = function (evt) {
 	if ('update' in evt.data) {
 		for (var key of evt.data.update) {
@@ -13,6 +16,8 @@ onmessage = function (evt) {
 	} else {
 		dynamics = evt.data.dynamics
 		charges = evt.data.charges
+		height = evt.data.height
+		width = evt.data.width
 		constant = evt.data.constant
 		limitSubstep = evt.data.limitSubstep
 		loop()
@@ -34,6 +39,24 @@ function loop() {
 			charge.y += charge.vy * dt
 		}
 	for (charge of dynamics) {
+		if (walls) {
+			if (charge.x < 0) {
+				charge.x = 0
+				charge.vx = -charge.vx
+			}
+			if (charge.y < 0) {
+				charge.y = 0
+				charge.vy = -charge.vy
+			}
+			if (charge.x > width / scale) {
+				charge.x = width / scale
+				charge.vx = -charge.vx
+			}
+			if (charge.y > height / scale) {
+				charge.y = height / scale
+				charge.vy = -charge.vy
+			}
+		}
 		charge.trail.push({
 			x: charge.x,
 			y: charge.y

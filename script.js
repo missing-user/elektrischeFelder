@@ -5,8 +5,9 @@ var canvas = document.getElementById('canvas'),
 	dynamics = [],
 	res = 10,
 	lastTime = 0,
-	hsvcolor = false,
-	chargev = 1
+	hsvcolor = true,
+	chargev = 1,
+	walls = true
 var offscreen = canvas.transferControlToOffscreen()
 const constant = Math.PI * 4,
 	scale = 100,
@@ -69,6 +70,8 @@ physicsWorker.postMessage({
 	dynamics: dynamics,
 	charges: charges,
 	constant: constant,
+	width: width,
+	height: height,
 	limitSubstep: limitSubstep
 })
 
@@ -98,6 +101,14 @@ function toggleHsv(value) {
 	renderer.postMessage({
 		hsvcolor: hsvcolor,
 		update: ['hsvcolor']
+	})
+}
+
+function wall(value) {
+	walls = value
+	physicsWorker.postMessage({
+		walls: walls,
+		update: ['walls']
 	})
 }
 
