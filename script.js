@@ -70,8 +70,8 @@ physicsWorker.postMessage({
 	dynamics: dynamics,
 	charges: charges,
 	constant: constant,
-	width: width,
-	height: height,
+	width: canvas.width,
+	height: canvas.height,
 	limitSubstep: limitSubstep
 })
 

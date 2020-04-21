@@ -31,7 +31,7 @@
     <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor" checked="checked">
     <br>
     <label for="walls">walls</label>
-    <input type="checkbox" onchange="wall(this.checked)" id="walls" checked="checked">
+    <input type="checkbox" onchange="wall(this.checked); canvas.style.outline = this.checked?'solid black':''" id="walls" checked="checked">
     <script type="text/javascript">
       var scr = document.createElement('script');
       scr.type = 'text/javascript';
