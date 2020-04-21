@@ -57,8 +57,8 @@ function draw() {
 	ctx.putImageData(imageData, 0, 0)
 	//draw a white dot on every charge
 	for (var charge of charges) {
-		ctx.fillStyle = charge.colour;
-		ctx.fillRect(charge.x * scale - 1 + res / 2, charge.y * scale - 1 + res / 2, 2, 2);
+		ctx.fillStyle = charge.colour
+		ctx.fillRect(charge.x * scale - 2 + res / 2, charge.y * scale - 2 + res / 2, 4, 4)
 	}
 	//draw all the trails
 	ctx.beginPath()

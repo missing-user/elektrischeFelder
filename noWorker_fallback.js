@@ -97,6 +97,11 @@ function loop() {
 			charge.vy += fv.y * charge.q * dt
 			charge.x += charge.vx * dt
 			charge.y += charge.vy * dt
+			if (charge.vx * charge.vx + charge.vy * charge.vy > 2000) {
+				v2 = charge.vx * charge.vx + charge.vy * charge.vy
+				charge.vx *= 2000 / v2
+				charge.vy *= 2000 / v2
+			}
 		}
 	for (charge of dynamics) {
 		if (walls) {
@@ -121,7 +126,7 @@ function loop() {
 			x: charge.x,
 			y: charge.y
 		})
-		if (charge.trail.length > 100) charge.trail = charge.trail.slice(1)
+		if (charge.trail.length > 250) charge.trail = charge.trail.slice(charge.trail.length - 250)
 	}
 	draw()
 	requestAnimationFrame(loop)
@@ -153,7 +158,7 @@ function draw() {
 	//draw a white dot on every charge
 	for (var charge of charges) {
 		ctx.fillStyle = charge.colour;
-		ctx.fillRect(charge.x * scale - 1 + res / 2, charge.y * scale - 1 + res / 2, 2, 2);
+		ctx.fillRect(charge.x * scale - 2 + res / 2, charge.y * scale - 2 + res / 2, 4, 4)
 	}
 	//draw all the trails
 	ctx.beginPath()
@@ -244,7 +249,7 @@ function getFieldVector(x, y) {
 		dx = x - e.x
 		dy = y - e.y
 		r2 = dx * dx + dy * dy
-		if (r2 < 0.0005) r2 = 0.0005
+		if (r2 < 0.01) r2 = 0.01
 		strength = constant * e.q / r2
 		if (r2 > 0) {
 			dist = Math.sqrt(r2)

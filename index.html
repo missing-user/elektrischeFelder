@@ -2,19 +2,17 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>elektrische Felder</title>
+    <title>electric fields</title>
   </head>
   <body>
-    <style media="screen">
-      canvas {
-        background-color: gray;
-      }
-    </style>
+    <h1>electric field simulation</h1>
+    <h2>How to use</h2>
+    <p>Place particles on the canvas and watch them interact! At the bottom of the site, there's a few settings to adjust charge, if the particles are positive or negative, the render resolution etc. Just play around with it and have fun!</p>
     <canvas id="canvas" width="1000" height="1000"></canvas><br>
     <button type="button" name="button" onclick="pause()">pause</button>
     <br>
     <label for="pixelsPerCell">pixels per cell</label>
-    <input type="range" name="" value="10" min="2" onchange="renderHighRes(this.value)" oninput="document.getElementById('pixelsPerCello').value = this.value" max="50" id="pixelsPerCell">
+    <input type="range" name="" value="10" min="1" onchange="renderHighRes(this.value)" oninput="document.getElementById('pixelsPerCello').value = this.value" max="50" id="pixelsPerCell">
     <output id="pixelsPerCello">10</output>
     <br>
     <label for="chargeIntensity">charge value</label>
@@ -22,7 +20,7 @@
     <output id="chargeIntensityo">1</output>
     <br>
     <label for="dynamicc">movable charge</label>
-    <input type="checkbox" id="dynamicc">
+    <input type="checkbox" id="dynamicc" checked="checked">
     <br>
     <label for="positiveCharge">positive charge</label>
     <input type="checkbox" id="positiveCharge" checked="checked">
@@ -35,7 +33,7 @@
     <script type="text/javascript">
       var scr = document.createElement('script');
       scr.type = 'text/javascript';
-      if (window.OffscreenCanvas) 
+      if (!window.OffscreenCanvas) 
         scr.src = "script.js"
       else 
         scr.src = "noWorker_fallback.js"
