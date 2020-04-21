@@ -5,7 +5,8 @@ var canvas = document.getElementById('canvas'),
 	dynamics = [],
 	res = 10,
 	lastTime = 0,
-	hsvcolor = false
+	hsvcolor = false,
+	chargev = 1
 var offscreen = canvas.transferControlToOffscreen()
 const constant = Math.PI * 4,
 	scale = 100,
@@ -25,7 +26,7 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: document.getElementById('positiveCharge').checked ? 1 : -1,
+			q: document.getElementById('positiveCharge').checked ? chargev : -chargev,
 			dynamic: document.getElementById('dynamicc').checked,
 			trail: []
 		})
@@ -36,7 +37,7 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: !document.getElementById('positiveCharge').checked ? 1 : -1,
+			q: !document.getElementById('positiveCharge').checked ? chargev : -chargev,
 			dynamic: document.getElementById('dynamicc').checked,
 			trail: []
 		})
