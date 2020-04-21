@@ -53,14 +53,28 @@ function updateView() {
 	})
 }
 
-function renderHighRes(btn) {
-	if (btn.textContent == 'low res mode') {
-		res = 10
-		btn.textContent = 'high res mode'
-	} else {
-		res = 1
-		btn.textContent = 'low res mode'
+function renderHighRes(value) {
+	res = (value) | 0
+	res = closest([1, 2, 4, 5, 8, 10, 20, 25, 40, 50], res)
+	console.log(res)
+}
+
+function toggleHsv(value) {
+	hsvcolor = value
+}
+
+function closest(array, num) {
+	var i = 0;
+	var minDiff = 1000;
+	var ans;
+	for (i in array) {
+		var m = Math.abs(num - array[i]);
+		if (m < minDiff) {
+			minDiff = m;
+			ans = array[i];
+		}
 	}
+	return ans;
 }
 
 function pause() {
@@ -102,12 +116,14 @@ function draw() {
 		for (var j = 0; j < canvas.height; j += res) {
 			c = getColor(getFieldStrength(j / scale, i / scale))
 			//if the resolution is lower than one, fill the remaining pixels
-			for (var k = 0; k < res * res; k++) {
-				pixelOffset = (k) % res + ((k / res) | 0) * canvas.width
-				pixelOffset *= 4
-				imageData.data[index + pixelOffset] = c[0]
-				imageData.data[index + pixelOffset + 1] = c[1]
-				imageData.data[index + pixelOffset + 2] = c[2]
+			for (let k = 0; k < res; k++) {
+				for (let foo = 0; foo < res; foo++) {
+					pixelOffset = k + foo * canvas.width
+					pixelOffset *= 4
+					imageData.data[index + pixelOffset] = c[0]
+					imageData.data[index + pixelOffset + 1] = c[1]
+					imageData.data[index + pixelOffset + 2] = c[2]
+				}
 			}
 			index += 4 * res
 		}

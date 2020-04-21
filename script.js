@@ -82,20 +82,14 @@ function updateView() {
 	})
 }
 
-function renderHighRes(btn) {
-	if (btn.textContent == 'low res mode') {
-		renderer.postMessage({
-			res: 10,
-			update: ['res']
-		})
-		btn.textContent = 'high res mode'
-	} else {
-		renderer.postMessage({
-			res: 1,
-			update: ['res']
-		})
-		btn.textContent = 'low res mode'
-	}
+function renderHighRes(value) {
+	res = (value) | 0
+	res = closest([1, 2, 4, 5, 8, 10, 20, 25, 40, 50], res)
+	//closest divisor of the canvas resulution
+	renderer.postMessage({
+		res: res, //fast integer parsing
+		update: ['res']
+	})
 }
 
 function toggleHsv(value) {
@@ -104,6 +98,20 @@ function toggleHsv(value) {
 		hsvcolor: hsvcolor,
 		update: ['hsvcolor']
 	})
+}
+
+function closest(array, num) {
+	var i = 0;
+	var minDiff = 1000;
+	var ans;
+	for (i in array) {
+		var m = Math.abs(num - array[i]);
+		if (m < minDiff) {
+			minDiff = m;
+			ans = array[i];
+		}
+	}
+	return ans;
 }
 
 function pause() {

@@ -11,8 +11,10 @@
       }
     </style>
     <canvas id="canvas" width="1000" height="1000"></canvas><br>
-    <button type="button" name="button" onclick="renderHighRes(this)">high res mode</button>
     <button type="button" name="button" onclick="pause()">pause</button>
+    <br>
+    <label for="pixelsPerCell">pixels per cell</label>
+    <input type="range" name="" value="10" min="2" onchange="renderHighRes(this.value)" max="50" id="pixelsPerCell">
     <br>
     <label for="dynamicc">movable charge</label>
     <input type="checkbox" id="dynamicc">
@@ -41,6 +43,7 @@
         console.log('polyfil for offscreen canvas succcessful');
       }
     </script>
-    <script type="text/javascript" src="script.js"></script>
+    <!--<script type="text/javascript" src="script.js"></script>-->
+    <script type="text/javascript" src="noWorker_fallback.js"></script>
   </body>
 </html>
