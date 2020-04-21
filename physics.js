@@ -7,6 +7,7 @@ var paused = false
 var walls = true
 var width
 var height
+var scale
 onmessage = function (evt) {
 	if ('update' in evt.data) {
 		for (var key of evt.data.update) {
@@ -18,6 +19,7 @@ onmessage = function (evt) {
 		charges = evt.data.charges
 		height = evt.data.height
 		width = evt.data.width
+		scale = evt.data.scales
 		constant = evt.data.constant
 		limitSubstep = evt.data.limitSubstep
 		loop()
