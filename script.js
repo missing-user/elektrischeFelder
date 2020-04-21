@@ -72,7 +72,7 @@ physicsWorker.postMessage({
 	constant: constant,
 	width: canvas.width,
 	height: canvas.height,
-	scale: canvas.scale,
+	scale: scale,
 	limitSubstep: limitSubstep
 })
 
