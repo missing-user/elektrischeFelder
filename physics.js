@@ -19,7 +19,7 @@ onmessage = function (evt) {
 		charges = evt.data.charges
 		height = evt.data.height
 		width = evt.data.width
-		scale = evt.data.scales
+		scale = evt.data.scale
 		constant = evt.data.constant
 		limitSubstep = evt.data.limitSubstep
 		loop()
