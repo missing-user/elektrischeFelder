@@ -4,7 +4,8 @@ var canvas = document.getElementById('canvas'),
 	charges = [],
 	dynamics = [],
 	res = 10,
-	lastTime = 0
+	lastTime = 0,
+	hsvcolor = false
 var offscreen = canvas.transferControlToOffscreen()
 const constant = Math.PI * 4,
 	scale = 100,
@@ -95,6 +96,14 @@ function renderHighRes(btn) {
 		})
 		btn.textContent = 'low res mode'
 	}
+}
+
+function toggleHsv(value) {
+	hsvcolor = value
+	renderer.postMessage({
+		hsvcolor: hsvcolor,
+		update: ['hsvcolor']
+	})
 }
 
 function pause() {

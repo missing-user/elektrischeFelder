@@ -15,10 +15,13 @@
     <button type="button" name="button" onclick="pause()">pause</button>
     <br>
     <label for="dynamicc">movable charge</label>
-    <input type="checkbox" name="" value="" id="dynamicc">
+    <input type="checkbox" id="dynamicc">
     <br>
     <label for="positiveCharge">positive charge</label>
-    <input type="checkbox" name="" value="" id="positiveCharge" checked="checked">
+    <input type="checkbox" id="positiveCharge" checked="checked">
+    <br>
+    <label for="hsvcolor">HSV color pallete</label>
+    <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor">
     <script type="text/javascript">
       if (!window.OffscreenCanvas) {
         window.OffscreenCanvas = class OffscreenCanvas {
