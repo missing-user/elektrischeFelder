@@ -39,27 +39,26 @@ function draw() {
 	//index = 4 * i + 4 * j * canvas.width
 	index = 0
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
-	if (charges.length > 0)
-		for (var i = 0; i < canvas.width; i += res) {
-			for (var j = 0; j < canvas.height; j += res) {
-				c = getColor(getFieldStrength(j / scale, i / scale))
-				//if the resolution is lower than one, fill the remaining pixels
-				for (var k = 0; k < res * res; k++) {
-					pixelOffset = (k) % res + ((k / res) | 0) * canvas.width
-					pixelOffset *= 4
-					imageData.data[index + pixelOffset] = c[0]
-					imageData.data[index + pixelOffset + 1] = c[1]
-					imageData.data[index + pixelOffset + 2] = c[2]
-				}
-				index += 4 * res
+	for (var i = 0; i < canvas.width; i += res) {
+		for (var j = 0; j < canvas.height; j += res) {
+			c = getColor(getFieldStrength(j / scale, i / scale))
+			//if the resolution is lower than one, fill the remaining pixels
+			for (var k = 0; k < res * res; k++) {
+				pixelOffset = (k) % res + ((k / res) | 0) * canvas.width
+				pixelOffset *= 4
+				imageData.data[index + pixelOffset] = c[0]
+				imageData.data[index + pixelOffset + 1] = c[1]
+				imageData.data[index + pixelOffset + 2] = c[2]
 			}
-			index += 4 * (res - 1) * canvas.width
+			index += 4 * res
 		}
-	else {
+		index += 4 * (res - 1) * canvas.width
+	}
+	ctx.putImageData(imageData, 0, 0)
+	if (charges.length == 0) {
 		ctx.font = '60px sans-serif'
 		ctx.fillText('Click to add particles', 230, 450)
 	}
-	ctx.putImageData(imageData, 0, 0)
 	//draw a white dot on every charge
 	for (var charge of charges) {
 		ctx.fillStyle = charge.colour
