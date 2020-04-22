@@ -33,7 +33,7 @@
     <script type="text/javascript">
       var scr = document.createElement('script');
       scr.type = 'text/javascript';
-      if (!window.OffscreenCanvas) 
+      if (window.OffscreenCanvas) 
         scr.src = "script.js"
       else 
         scr.src = "noWorker_fallback.js"
