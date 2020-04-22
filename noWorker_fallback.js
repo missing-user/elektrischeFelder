@@ -97,11 +97,6 @@ function loop() {
 			charge.vy += fv.y * charge.q * dt
 			charge.x += charge.vx * dt
 			charge.y += charge.vy * dt
-			if (charge.vx * charge.vx + charge.vy * charge.vy > 2000) {
-				v2 = charge.vx * charge.vx + charge.vy * charge.vy
-				charge.vx *= 2000 / v2
-				charge.vy *= 2000 / v2
-			}
 		}
 	for (charge of dynamics) {
 		if (walls) {
