@@ -7,6 +7,8 @@ var canvas = document.getElementById('canvas'),
 	chargev = 1,
 	walls = false
 var offscreen = canvas.transferControlToOffscreen()
+var positiveCharge = true,
+	dynamicc = true
 const constant = Math.PI * 4,
 	scale = 100,
 	limitSubstep = 2500
@@ -29,8 +31,8 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: document.getElementById('positiveCharge').checked ? chargev : -chargev,
-			dynamic: document.getElementById('dynamicc').checked,
+			q: positiveCharge ? chargev : -chargev,
+			dynamic: dynamicc,
 			trail: []
 		})
 	} else {
@@ -40,8 +42,8 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: !document.getElementById('positiveCharge').checked ? chargev : -chargev,
-			dynamic: document.getElementById('dynamicc').checked,
+			q: !positiveCharge ? chargev : -chargev,
+			dynamic: dynamicc,
 			trail: []
 		})
 	}
