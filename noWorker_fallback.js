@@ -1,13 +1,13 @@
 var canvas = document.getElementById('canvas'),
-	elemLeft = canvas.offsetLeft,
-	elemTop = canvas.offsetTop,
 	charges = [],
 	dynamics = [],
 	res = 20,
 	lastTime = 0,
 	hsvcolor = true,
 	chargev = 1,
-	walls = true
+	walls = false
+var positiveCharge = true,
+	dynamicc = true
 var ctx = canvas.getContext('2d')
 var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
 const constant = Math.PI * 4,
@@ -16,8 +16,12 @@ const constant = Math.PI * 4,
 var paused = false
 // Add event listener for `click` events.
 canvas.addEventListener('mousedown', function (event) {
-	var x = event.pageX - elemLeft,
-		y = event.pageY - elemTop;
+	let rect = canvas.getBoundingClientRect();
+	console.log(rect);
+	let x = event.clientX - rect.left;
+	x *= canvas.width / rect.width
+	let y = event.clientY - rect.top;
+	y *= canvas.height / rect.height
 	console.log(event)
 	if (event.button == 0) {
 		charges.push({
@@ -26,8 +30,8 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: document.getElementById('positiveCharge').checked ? chargev : -chargev,
-			dynamic: document.getElementById('dynamicc').checked,
+			q: positiveCharge ? chargev : -chargev,
+			dynamic: dynamicc,
 			trail: []
 		})
 	} else {
@@ -37,8 +41,8 @@ canvas.addEventListener('mousedown', function (event) {
 			y: y / scale,
 			vx: 0,
 			vy: 0,
-			q: !document.getElementById('positiveCharge').checked ? chargev : -chargev,
-			dynamic: document.getElementById('dynamicc').checked,
+			q: !positiveCharge ? chargev : -chargev,
+			dynamic: dynamicc,
 			trail: []
 		})
 	}

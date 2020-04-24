@@ -3,33 +3,65 @@
   <head>
     <meta charset="utf-8">
     <title>electric fields</title>
+    <!-- MOBILE––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- CSS––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/darkskelleton.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <h1>electric field simulation</h1>
-    <h2>How to use</h2>
-    <p>Place particles on the canvas and watch them interact! At the bottom of the site, there's a few settings to adjust charge, if the particles are positive or negative, the render resolution etc. Just play around with it and have fun!</p>
-    <canvas id="canvas" width="1000" height="1000"></canvas><br>
-    <button type="button" name="button" onclick="pause()">pause</button>
-    <br>
-    <label for="pixelsPerCell">pixels per cell</label>
-    <input type="range" name="" value="10" min="1" onchange="renderHighRes(this.value)" oninput="document.getElementById('pixelsPerCello').value = this.value" max="50" id="pixelsPerCell">
-    <output id="pixelsPerCello">10</output>
-    <br>
-    <label for="chargeIntensity">charge value</label>
-    <input type="range" value="50" min="1" max="100" oninput="chargev = Math.exp(this.value/11)/100; document.getElementById('chargeIntensityo').value = chargev" id="chargeIntensity">
-    <output id="chargeIntensityo">1</output>
-    <br>
-    <label for="dynamicc">movable charge</label>
-    <input type="checkbox" id="dynamicc" checked="checked">
-    <br>
-    <label for="positiveCharge">positive charge</label>
-    <input type="checkbox" id="positiveCharge" checked="checked">
-    <br>
-    <label for="hsvcolor">HSV color pallete</label>
-    <input type="checkbox" onchange="toggleHsv(this.checked)" id="hsvcolor" checked="checked">
-    <br>
-    <label for="walls">walls</label>
-    <input type="checkbox" onchange="wall(this.checked); canvas.style.outline = this.checked?'solid black':''" id="walls" checked="checked">
+    <div class="container">
+      <div class="row">
+        <div class="column" style="margin-top: 2rem">
+          <h1>electric field simulation</h1>
+          <h2>How to use</h2>
+          <p>Place particles on the canvas and watch them interact! At the bottom of the site, there's a few settings to adjust charge, if the particles are positive or negative, the render resolution etc. Just play around with it and have fun!</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <canvas id="canvas" width="1000" height="1000"></canvas>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="one-half column">
+          <label for="chargeIntensity">charge value</label>
+          <input type="range" value="50" min="1" max="100" oninput="chargev = Math.exp(this.value/11)/100; document.getElementById('chargeIntensityo').value = chargev" id="chargeIntensity">
+          <output id="chargeIntensityo">1</output>
+        </div>
+        <div class="one-half column">
+          <label for="pixelsPerCell">pixels per cell</label>
+          <input type="range" name="" value="10" min="1" onchange="renderHighRes(this.value)" oninput="document.getElementById('pixelsPerCello').value = this.value" max="50" id="pixelsPerCell">
+          <output id="pixelsPerCello">10</output>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="one-half column">
+          <button class="u-full-width" type="button" name="button" onclick="toggleHsv(!hsvcolor); this.textContent = hsvcolor?'RGB':'HSV'">RGB</button>
+        </div>
+        <div class="one-half column">
+          <button class="u-full-width" type="button" name="button" onclick="dynamicc =! dynamicc; this.textContent = dynamicc?'toggle static':'toggle dynamic'">toggle static</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="one-half column">
+          <button class="u-full-width" type="button" name="button" onclick="positiveCharge =! positiveCharge; this.textContent = positiveCharge?'toggle negative':'toggle positive'">toggle negative</button>
+        </div>
+        <div class="one-half column">
+          <button class="u-full-width" type="button" name="button" onclick="wall(!walls); canvas.style.outline = walls?'solid black':''; this.textContent = walls?'no walls':'walls'">walls</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <button class="u-full-width" type="button" name="button" onclick="pause()">pause</button>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript">
       var scr = document.createElement('script');
       scr.type = 'text/javascript';

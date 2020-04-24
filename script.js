@@ -1,13 +1,11 @@
 var canvas = document.getElementById('canvas'),
-	elemLeft = canvas.offsetLeft,
-	elemTop = canvas.offsetTop,
 	charges = [],
 	dynamics = [],
 	res = 10,
 	lastTime = 0,
 	hsvcolor = true,
 	chargev = 1,
-	walls = true
+	walls = false
 var offscreen = canvas.transferControlToOffscreen()
 const constant = Math.PI * 4,
 	scale = 100,
@@ -17,8 +15,12 @@ var renderer = new Worker("renderer.js")
 var physicsWorker = new Worker("physics.js")
 // Add event listener for `click` events.
 canvas.addEventListener('mousedown', function (event) {
-	var x = event.pageX - elemLeft,
-		y = event.pageY - elemTop;
+	let rect = canvas.getBoundingClientRect();
+	console.log(rect);
+	let x = event.clientX - rect.left;
+	x *= canvas.width / rect.width
+	let y = event.clientY - rect.top;
+	y *= canvas.height / rect.height
 	console.log(event)
 	if (event.button == 0) {
 		charges.push({
